@@ -55,6 +55,13 @@ public class InteractionHandler
         // Register the commands globally.
         // alternatively you can use _handler.RegisterCommandsGloballyAsync() to register commands to a specific guild.
         await _handler.RegisterCommandsGloballyAsync();
+
+        var guildId = _client.Guilds.FirstOrDefault(g => g.Name == _configuration["guildName"])?.Id;
+
+        if (guildId.HasValue)
+        {
+            await _handler.AddCommandsToGuildAsync(guildId: guildId.Value, deleteMissing: true);
+        }
     }
 
     private async Task HandleInteraction(SocketInteraction interaction)
