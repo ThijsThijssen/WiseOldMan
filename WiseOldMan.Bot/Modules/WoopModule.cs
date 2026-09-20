@@ -1,6 +1,6 @@
 using Discord.Interactions;
 
-namespace WiseOldMan.Modules;
+namespace WiseOldMan.Bot.Modules;
 
 public class WoopModule : InteractionModuleBase<SocketInteractionContext>
 {
@@ -35,7 +35,8 @@ public class WoopModule : InteractionModuleBase<SocketInteractionContext>
         [Choice("Farming", "farming")]
         [Choice("Runecrafting", "runecrafting")]
         [Choice("Hunter", "hunter")]
-        [Choice("Construction", "construction")] string skill
+        [Choice("Construction", "construction")]
+            string skill
     )
     {
         await RespondAsync($"You selected the skill: {skill}");

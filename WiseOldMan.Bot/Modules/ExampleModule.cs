@@ -1,9 +1,10 @@
 using Discord;
 using Discord.Interactions;
-using WiseOldMan.Attributes;
-using WiseOldMan.Enums;
+using WiseOldMan.Bot;
+using WiseOldMan.Bot.Attributes;
+using WiseOldMan.Bot.Enums;
 
-namespace WiseOldMan.Modules;
+namespace WiseOldMan.Bot.Modules;
 
 // Interaction modules must be public and inherit from an IInteractionModuleBase
 public class ExampleModule : InteractionModuleBase<SocketInteractionContext>

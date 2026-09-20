@@ -2,7 +2,7 @@ using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 
-namespace WiseOldMan.Attributes;
+namespace WiseOldMan.Bot.Attributes;
 
 internal class DoUserCheck : PreconditionAttribute
 {

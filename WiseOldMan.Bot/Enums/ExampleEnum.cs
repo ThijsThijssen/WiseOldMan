@@ -1,6 +1,6 @@
 using Discord.Interactions;
 
-namespace WiseOldMan.Enums;
+namespace WiseOldMan.Bot.Enums;
 
 public enum ExampleEnum
 {

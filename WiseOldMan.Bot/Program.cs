@@ -1,10 +1,12 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WiseOldMan.Bot.Data;
 
-namespace WiseOldMan;
+namespace WiseOldMan.Bot;
 
 public class Program
 {
@@ -26,6 +28,12 @@ public class Program
             .AddEnvironmentVariables()
             .Build();
 
+        var connectionString =
+            _configuration.GetConnectionString("DatabaseContext")
+            ?? throw new InvalidOperationException(
+                "Connection string 'DatabaseContext' not found."
+            );
+
         _services = new ServiceCollection()
             .AddSingleton(_configuration)
             .AddSingleton(_socketConfig)
@@ -35,7 +43,20 @@ public class Program
                 _interactionServiceConfig
             ))
             .AddSingleton<InteractionHandler>()
+            .AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(
+                    connectionString,
+                    x => x.MigrationsAssembly("WiseOldMan.Migrations")
+                )
+            )
             .BuildServiceProvider();
+
+        // Ensure database is created
+        using (DatabaseContext context = _services.GetRequiredService<DatabaseContext>())
+        {
+            context.Database.EnsureCreated();
+            DbInitializer.Initialize(context);
+        }
 
         var client = _services.GetRequiredService<DiscordSocketClient>();
 

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="dotnet-tools.json" />
+  </Folder>
+  <Project Path="WiseOldMan.Bot/WiseOldMan.Bot.csproj" />
+  <Project
+    Path="WiseOldMan.Migrations/WiseOldMan.Migrations.csproj"
+    Id="7e5964f9-3786-4355-9536-b6b6c21960f7"
+  />
+</Solution>

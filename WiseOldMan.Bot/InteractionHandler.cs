@@ -6,7 +6,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 
-namespace WiseOldMan;
+namespace WiseOldMan.Bot;
 
 public class InteractionHandler
 {
