@@ -30,29 +30,29 @@ public class PlayerModule(DatabaseContext context) : InteractionModuleBase<Socke
             DiscordID = discordId,
             Skills =
             [
-                new() { SkillID = Skills.Attack, Experience = 0 },
-                new() { SkillID = Skills.Defence, Experience = 0 },
-                new() { SkillID = Skills.Strength, Experience = 0 },
-                new() { SkillID = Skills.Hitpoints, Experience = 0 },
-                new() { SkillID = Skills.Ranged, Experience = 0 },
-                new() { SkillID = Skills.Prayer, Experience = 0 },
-                new() { SkillID = Skills.Magic, Experience = 0 },
-                new() { SkillID = Skills.Cooking, Experience = 0 },
-                new() { SkillID = Skills.Woodcutting, Experience = 0 },
-                new() { SkillID = Skills.Fletching, Experience = 0 },
-                new() { SkillID = Skills.Fishing, Experience = 0 },
-                new() { SkillID = Skills.Firemaking, Experience = 0 },
-                new() { SkillID = Skills.Crafting, Experience = 0 },
-                new() { SkillID = Skills.Smithing, Experience = 0 },
-                new() { SkillID = Skills.Mining, Experience = 0 },
-                new() { SkillID = Skills.Herblore, Experience = 0 },
-                new() { SkillID = Skills.Agility, Experience = 0 },
-                new() { SkillID = Skills.Thieving, Experience = 0 },
-                new() { SkillID = Skills.Slayer, Experience = 0 },
-                new() { SkillID = Skills.Farming, Experience = 0 },
-                new() { SkillID = Skills.Runecraft, Experience = 0 },
-                new() { SkillID = Skills.Hunter, Experience = 0 },
-                new() { SkillID = Skills.Construction, Experience = 0 },
+                new() { SkillID = (int)Skills.Attack, Experience = 0 },
+                new() { SkillID = (int)Skills.Defence, Experience = 0 },
+                new() { SkillID = (int)Skills.Strength, Experience = 0 },
+                new() { SkillID = (int)Skills.Hitpoints, Experience = 0 },
+                new() { SkillID = (int)Skills.Ranged, Experience = 0 },
+                new() { SkillID = (int)Skills.Prayer, Experience = 0 },
+                new() { SkillID = (int)Skills.Magic, Experience = 0 },
+                new() { SkillID = (int)Skills.Cooking, Experience = 0 },
+                new() { SkillID = (int)Skills.Woodcutting, Experience = 0 },
+                new() { SkillID = (int)Skills.Fletching, Experience = 0 },
+                new() { SkillID = (int)Skills.Fishing, Experience = 0 },
+                new() { SkillID = (int)Skills.Firemaking, Experience = 0 },
+                new() { SkillID = (int)Skills.Crafting, Experience = 0 },
+                new() { SkillID = (int)Skills.Smithing, Experience = 0 },
+                new() { SkillID = (int)Skills.Mining, Experience = 0 },
+                new() { SkillID = (int)Skills.Herblore, Experience = 0 },
+                new() { SkillID = (int)Skills.Agility, Experience = 0 },
+                new() { SkillID = (int)Skills.Thieving, Experience = 0 },
+                new() { SkillID = (int)Skills.Slayer, Experience = 0 },
+                new() { SkillID = (int)Skills.Farming, Experience = 0 },
+                new() { SkillID = (int)Skills.Runecraft, Experience = 0 },
+                new() { SkillID = (int)Skills.Hunter, Experience = 0 },
+                new() { SkillID = (int)Skills.Construction, Experience = 0 },
             ],
         };
 
@@ -76,10 +76,10 @@ public class PlayerModule(DatabaseContext context) : InteractionModuleBase<Socke
     {
         var discordId = Context.User.Id;
 
-        var player = context
+        var player = await context
             .Players.Include(player => player.Skills)
                 .ThenInclude(skill => skill.Skill)
-            .FirstOrDefault(x => x.DiscordID == discordId);
+            .FirstOrDefaultAsync(x => x.DiscordID == discordId);
 
         if (player == null)
         {
