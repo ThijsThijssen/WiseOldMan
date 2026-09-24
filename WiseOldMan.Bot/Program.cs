@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WiseOldMan.Bot.Data;
+using WiseOldMan.Bot.Handlers;
+using WiseOldMan.Bot.Services;
 
 namespace WiseOldMan.Bot;
 
@@ -43,7 +45,9 @@ public class Program
                 _interactionServiceConfig
             ))
             .AddSingleton<InteractionHandler>()
-            .AddDbContext<DatabaseContext>(options =>
+            .AddSingleton<ModalHandler>()
+            .AddSingleton<PlayerService>()
+            .AddPooledDbContextFactory<DatabaseContext>(options =>
                 options.UseSqlServer(
                     connectionString,
                     x => x.MigrationsAssembly("WiseOldMan.Migrations")
@@ -59,8 +63,10 @@ public class Program
         }
 
         var client = _services.GetRequiredService<DiscordSocketClient>();
+        var modalHandler = _services.GetRequiredService<ModalHandler>();
 
         client.Log += LogAsync;
+        client.ModalSubmitted += modalHandler.HandleAsync;
 
         // Here we can initialize the service that will register and execute our commands
         await _services.GetRequiredService<InteractionHandler>().InitializeAsync();
